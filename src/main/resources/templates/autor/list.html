@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <head>
     <meta charset="UTF-8" /> 
-    <title>Biblioteca</title>
+    <title>Autores</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
 <body>
-	<h1>Listagem de Autores</h1>
+	<div class="container">	   
+	 	<div class="jumbotron text-center">
+	  		<h1>Biblioteca</h1>
+		</div> 
+		
+		<ul class="nav breadcrumb">
+		    <li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/autor/list}">Autores</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/livros/list}">Livros</a>
+			</li>			
+		</ul>
+		
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+			<li class="breadcrumb-item active" aria-current="page">Listagem de Autores</li>
+			</ol>
+		</nav>
+		
+		<table class="table table-striped table-hover">
+			<thead>
+				<th style="width:100px">ID</th>
+				<th style="width:600px">Nome</th>
+				<th style="width:200px"></th>
+			</thead>
+			<tr th:each="autor : ${listaDeAutores}">
+				<td th:text="${autor.id}"></td>
+				<td th:text="${autor.nome}"></td>
+				<td>
+					<a style="width:100px" class="btn btn-info" th:href="@{'/autor/alterar/' + ${autor.id}}">Alterar</a>
+					<a style="width:100px" class="btn btn-danger" th:href="@{'/autor/excluir' + ${autor.id}}">Excluir</a>
+					
+				</td>
+			</tr>
+		
+		
+		</table>
+	</div>	
 </body>
 </html>

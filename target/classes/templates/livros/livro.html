@@ -1,10 +1,61 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" /> 
-    <title>Biblioteca</title>
-  </head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:form="http://www.w3.org/1999/xhtml"
+      layout:decorate="layout">
+<head>
+    <meta charset="UTF-8" />
+    <title>Novo Livro</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
 <body>
-	<h1>Novo Livro</h1>
+	<div class="container">
+		<div class="jumbotron text-center">
+	  		<h1>Biblioteca</h1>
+		</div>
+	
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+			<li class="breadcrumb-item active" aria-current="page">Cadastro de Livros</li>
+			</ol>
+		</nav>	
+	
+		<a class="btn btn-sm btn-info" href="#" th:href="@{/livros/list}" style="width:150px"></i>Voltar para Lista</a>
+	
+		<div layout:fragment="content" class="container">
+		    <form id="livroForm" th:action="@{/livros/gravar}" method="post" th:object="${livro}" action="#" >
+		        <div class="form-group row">
+		            <input type="hidden"  th:field="*{id}" />
+							            
+		            <div class="form-group" style="width: 100%">
+			            <label for="staticTitulo" class="col-sm-2 col-form-label">Título</label>
+			            <div style="width: 100%">
+			                <input type="text" th:field="*{nome}"  class="form-control" id="staticTitulo" >
+			                <span  th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Nome Error</span>
+			            </div>
+		            </div>
+		            
+		            <div class="form-group" style="width: 100%">
+			            <label for="staticTitulo" class="col-sm-2 col-form-label">Autor</label>
+			            <div class="col-sm-15">
+			                <select form="livroForm" th:object="${livro}" th:field="*{autor}" class="form-control">
+			                    <option value="">Selecione o Autor</option>
+			                    <option th:each="autor : ${autores}" th:value="${autor.id}" th:utext="${autor.nome} " selected="selected"></option>
+			                </select>
+			            </div>
+			        </div>    
+		            
+		            <div class="form-group" style="width: 100%">
+			            <label for="staticPaginas" class="col-sm-5 col-form-label">Total Páginas</label>
+			            <div class="col-sm-3">
+			                <input type="text" th:field="*{quantidadePaginas}" class="form-control" id="staticPaginas" >
+			                <span  th:if="${#fields.hasErrors('quantidadePaginas')}" th:errors="*{quantidadePaginas}">Quantidade de pagina Error</span>
+			            </div>
+			        </div>    
+		            
+		            <button type="submit" class="btn btn-primary" style="width:150px">Gravar</button>
+		        </div>
+		    </form>
+		</div>
+	</div>
 </body>
 </html>
