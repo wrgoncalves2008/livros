@@ -3,6 +3,7 @@ package br.biblioteca.livros.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,40 +22,52 @@ public class AutorController {
 	@Autowired
 	private AutorService autorService;
 
-	@GetMapping("/list")
-	public ModelAndView list() {
+	@GetMapping("/index")
+	public ModelAndView index() {
 		System.out.println("Listando os autores");
 
 		Iterable<Autor> listaAutores = autorService.listaAutores();
 
-		return new ModelAndView("/autor/list", "listaDeAutores", listaAutores);
+		return new ModelAndView("/autor/index", "listaDeAutores", listaAutores);
 	}
 
 	@GetMapping("/novo")
-	public ModelAndView novo() {
+	public ModelAndView createForm(@ModelAttribute Autor autor) {
 		System.out.println("Cadastrando novo autor");
+		ModelAndView modelAndView = new ModelAndView("autor/autor");
 
-		Iterable<Autor> listaAutores = autorService.listaAutores();
-
-		return new ModelAndView("/autor/autor", "listaDeAutores", listaAutores);
+		return modelAndView;
 	}
 
 	@PostMapping("/gravar")
 	public ModelAndView gravar(Autor autor) {
 		System.out.println("Gravando novo autor " + autor.getNome());
-		return new ModelAndView("redirect:/autor/list");
+
+		autorService.save(autor);
+
+		return new ModelAndView("redirect:/autor/index");
 	}
 
 	@GetMapping("/alterar/{id}")
 	public ModelAndView alterar(@PathVariable("id") Long id) {
 		System.out.println("Alterando o cadastro do autor id " + id);
-		return new ModelAndView("redirect:/autor/list");
+
+		ModelAndView modelandview = new ModelAndView("/autor/autor");
+
+		Autor autor = autorService.getAutor(id);
+
+		modelandview.addObject("autor", autor);
+
+		return modelandview;
 	}
 
 	@GetMapping("/excluir/{id}")
 	public ModelAndView excluir(@PathVariable("id") Long id) {
 		System.out.println("Excluindo o cadastro do autor id " + id);
-		return new ModelAndView("redirect:/autor/list");
+
+		autorService.delete(id);
+
+		return new ModelAndView("redirect:/autor/index");
 	}
 
 	@GetMapping("/getautores")

@@ -1,16 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:form="http://www.w3.org/1999/xhtml"
+      layout:decorate="layout">
   <head>
     <meta charset="UTF-8" /> 
     <title>Biblioteca</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
 <body>
-	<h1>Cadastro de Autor</h1>
+	<div class="container">
 	
-	<form method="post" action="/autor/gravar">
-		Nome:<input type="text" name="nome">
-		<input type="submit" value="Gravar">	 
+		<div class="jumbotron text-center">
+	  		<h1>Biblioteca</h1>
+		</div>
+	
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+			<li class="breadcrumb-item active" aria-current="page">Cadastro de Autores</li>
+			</ol>
+		</nav>	
+	
+		<a class="btn btn-sm btn-info" href="#" th:href="@{/autor/index}" style="width:150px"></i>Voltar para Lista</a>
 		
-	</form>
+		<div layout:fragment="content" class="container">
+		    <form id="autorForm" th:action="@{/autor/gravar}" method="post" th:object="${autor}" action="#" >
+		        <div class="form-group row">
+		            <input type="hidden"  th:field="*{id}" />
+							            
+		            <div class="form-group" style="width: 100%">
+			            <label for="staticTitulo" class="col-sm-2 col-form-label">Título</label>
+			            <div style="width: 100%">
+			                <input type="text" th:field="*{nome}"  class="form-control" id="staticTitulo" >
+			                <span  th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Nome Error</span>
+			            </div>
+		            </div>
+		            
+		            <button type="submit" class="btn btn-primary" style="width:150px">Gravar</button>
+		        </div>
+		    </form>
+		</div>
+	</div>
 </body>
 </html>

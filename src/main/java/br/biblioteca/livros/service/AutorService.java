@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.biblioteca.livros.entidades.Autor;
-import br.biblioteca.livros.entidades.Livro;
 import br.biblioteca.livros.repositorio.AutorRepositorio;;
 
 @Service
@@ -19,12 +18,16 @@ public class AutorService {
 		return repositorio.findAll();
 	}
 
-	public void save(Livro livro) {
-		repositorio.save(livro);
+	public void save(Autor autor) {
+		repositorio.save(autor);
 	}
 
-	public void getAutor(long id) {
+	public Autor getAutor(long id) {
 		return repositorio.findById(id).get();
+	}
+
+	public void delete(long id) {
+		repositorio.deleteById(id);
 	}
 
 }

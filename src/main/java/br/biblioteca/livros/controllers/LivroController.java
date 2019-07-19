@@ -27,20 +27,14 @@ public class LivroController {
 	@Autowired
 	private AutorService autorService;
 
-	@GetMapping("/list")
-	public ModelAndView list() {
+	@GetMapping("/index")
+	public ModelAndView index() {
 		System.out.println("Listagem de livros");
 
 		Iterable<Livro> listaLivros = livroService.listaLivros();
 
-		return new ModelAndView("/livros/list", "listaDeLivros", listaLivros);
+		return new ModelAndView("/livros/index", "listaDeLivros", listaLivros);
 	}
-
-//	@GetMapping("/novo")
-//	public ModelAndView novo() {
-//		System.out.println("Novo Livro");
-//		return new ModelAndView("/livros/livro");
-//	}
 
 	@GetMapping("/novo")
 	public ModelAndView createForm(@ModelAttribute Livro livro) {
@@ -55,7 +49,7 @@ public class LivroController {
 
 		livroService.save(livro);
 
-		return new ModelAndView("redirect:/livros/list");
+		return new ModelAndView("redirect:/livros/index");
 	}
 
 	@GetMapping("/alterar/{id}")
@@ -76,7 +70,7 @@ public class LivroController {
 	public ModelAndView excluir(@PathVariable("id") Long id) {
 		System.out.println("Excluindo o livro " + id);
 		livroService.delete(id);
-		return new ModelAndView("redirect:/livros/list");
+		return new ModelAndView("redirect:/livros/index");
 	}
 
 	@GetMapping("/getlivros")
