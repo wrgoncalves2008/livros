@@ -19,10 +19,10 @@
 			</ol>
 		</nav>	
 	
-		<a class="btn btn-sm btn-info" href="#" th:href="@{livros/index}" style="width:150px"></i>Voltar para Lista</a>
+		<a class="btn btn-sm btn-info" href="#" th:href="@{/livros/index}" style="width:150px"></i>Voltar para Lista</a>
 	
 		<div layout:fragment="content" class="container">
-		    <form id="livroForm" th:action="@{livros/gravar}" method="post" th:object="${livro}" action="#" >
+		    <form id="livroForm" th:action="@{/livros/gravar}" method="post" th:object="${livro}" action="#" >
 		        <div class="form-group row">
 		            <input type="hidden"  th:field="*{id}" />
 							            
