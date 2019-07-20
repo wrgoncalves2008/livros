@@ -13,10 +13,10 @@
 		
 		<ul class="nav breadcrumb">
 		    <li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{autor/index}">Autores</a>
+				<a class="nav-link" href="#" th:href="@{/autor/index}">Autores</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{livros/index}">Livros</a>
+				<a class="nav-link" href="#" th:href="@{/livros/index}">Livros</a>
 			</li>			
 		</ul>
 		
@@ -40,8 +40,8 @@
 				<td th:text="${autor.id}"></td>
 				<td th:text="${autor.nome}"></td>
 				<td>
-					<a style="width:100px" class="btn btn-info" th:href="@{'autor/alterar/' + ${autor.id}}">Alterar</a>
-					<a style="width:100px" class="btn btn-danger" th:href="@{'autor/excluir/' + ${autor.id}}">Excluir</a>
+					<a style="width:100px" class="btn btn-info" th:href="@{'/autor/alterar/' + ${autor.id}}">Alterar</a>
+					<a style="width:100px" class="btn btn-danger" th:href="@{'/autor/excluir/' + ${autor.id}}">Excluir</a>
 					
 				</td>
 			</tr>
