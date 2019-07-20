@@ -31,7 +31,7 @@
 			            <label for="staticTitulo" class="col-sm-2 col-form-label">Título</label>
 			            <div style="width: 100%">
 			                <input type="text" th:field="*{nome}"  class="form-control" id="staticTitulo" >
-			                <span  th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Nome Error</span>
+			                <span  th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Error</span>
 			            </div>
 		            </div>
 		            

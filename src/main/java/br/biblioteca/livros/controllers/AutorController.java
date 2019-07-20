@@ -1,7 +1,10 @@
 package br.biblioteca.livros.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,8 +43,13 @@ public class AutorController {
 	}
 
 	@PostMapping("/gravar")
-	public ModelAndView gravar(Autor autor) {
+	public ModelAndView gravar(@ModelAttribute("autor") @Valid Autor autor, BindingResult bindingresult) {
 		System.out.println("Gravando novo autor " + autor.getNome());
+
+		if (bindingresult.hasErrors()) {
+			System.out.println("Deu erro para gravar os dados");
+			return new ModelAndView("/autor/autor");
+		}
 
 		autorService.save(autor);
 
