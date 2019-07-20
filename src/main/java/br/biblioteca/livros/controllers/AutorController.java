@@ -53,7 +53,7 @@ public class AutorController {
 
 		autorService.save(autor);
 
-		return new ModelAndView("redirect:/autor/index");
+		return new ModelAndView("redirect:autor/index");
 	}
 
 	@GetMapping("/alterar/{id}")
@@ -75,7 +75,7 @@ public class AutorController {
 
 		autorService.delete(id);
 
-		return new ModelAndView("redirect:/autor/index");
+		return new ModelAndView("redirect:autor/index");
 	}
 
 	@GetMapping("/getautores")
