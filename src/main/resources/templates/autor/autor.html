@@ -20,10 +20,10 @@
 			</ol>
 		</nav>	
 	
-		<a class="btn btn-sm btn-info" href="#" th:href="@{/autor/index}" style="width:150px"></i>Voltar para Lista</a>
+		<a class="btn btn-sm btn-info" href="#" th:href="@{autor/index}" style="width:150px"></i>Voltar para Lista</a>
 		
 		<div layout:fragment="content" class="container">
-		    <form id="autorForm" th:action="@{/autor/gravar}" method="post" th:object="${autor}" action="#" >
+		    <form id="autorForm" th:action="@{autor/gravar}" method="post" th:object="${autor}" action="#" >
 		        <div class="form-group row">
 		            <input type="hidden"  th:field="*{id}" />
 							            

@@ -36,7 +36,7 @@ public class LivroController {
 
 		Iterable<Livro> listaLivros = livroService.listaLivros();
 
-		return new ModelAndView("/livros/index", "listaDeLivros", listaLivros);
+		return new ModelAndView("livros/index", "listaDeLivros", listaLivros);
 	}
 
 	@GetMapping("/novo")
@@ -52,12 +52,12 @@ public class LivroController {
 
 		if (bindingresult.hasErrors()) {
 			System.out.println("Deu erro para gravar o livro");
-			return new ModelAndView("/livros/livro");
+			return new ModelAndView("livros/livro");
 		}
 
 		livroService.save(livro);
 
-		return new ModelAndView("redirect:/livros/index");
+		return new ModelAndView("redirect:livros/index");
 	}
 
 	@GetMapping("/alterar/{id}")
@@ -78,7 +78,7 @@ public class LivroController {
 	public ModelAndView excluir(@PathVariable("id") Long id) {
 		System.out.println("Excluindo o livro " + id);
 		livroService.delete(id);
-		return new ModelAndView("redirect:/livros/index");
+		return new ModelAndView("redirect:livros/index");
 	}
 
 	@GetMapping("/getlivros")
