@@ -31,7 +31,7 @@ public class AutorController {
 
 		Iterable<Autor> listaAutores = autorService.listaAutores();
 
-		return new ModelAndView("/autor/index", "listaDeAutores", listaAutores);
+		return new ModelAndView("autor/index", "listaDeAutores", listaAutores);
 	}
 
 	@GetMapping("/novo")
@@ -48,7 +48,7 @@ public class AutorController {
 
 		if (bindingresult.hasErrors()) {
 			System.out.println("Deu erro para gravar os dados");
-			return new ModelAndView("/autor/autor");
+			return new ModelAndView("autor/autor");
 		}
 
 		autorService.save(autor);
@@ -60,7 +60,7 @@ public class AutorController {
 	public ModelAndView alterar(@PathVariable("id") Long id) {
 		System.out.println("Alterando o cadastro do autor id " + id);
 
-		ModelAndView modelandview = new ModelAndView("/autor/autor");
+		ModelAndView modelandview = new ModelAndView("autor/autor");
 
 		Autor autor = autorService.getAutor(id);
 
