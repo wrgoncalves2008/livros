@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:form="http://www.w3.org/1999/xhtml"
-      layout:decorate="layout">
+      layout:decorate="layout">  
 <head>
     <meta charset="UTF-8" />
     <title>Novo Usuário</title>
@@ -22,7 +22,7 @@
 		<a class="btn btn-sm btn-info" href="#" th:href="@{/user/index}" style="width:150px"></i>Voltar para Lista</a>
 	
 		<div layout:fragment="content" class="container">
-		    <form id="userForm" th:action="@{/user/gravar}" method="post" th:object="${user}" action="#" >
+		    <form id="userForm" th:action="@{/user/registration}" method="post" th:object="${userForm}" action="#" >
 		        <div class="form-group row">
 		            <input type="hidden"  th:field="*{id}" />
 							            
@@ -37,7 +37,7 @@
 		            <div class="form-group" style="width: 100%">
 			            <label for="staticTitulo" class="col-sm-2 col-form-label">Nível de Acesso</label>
 			            <div class="col-sm-15">
-			                <select form="userForm" th:object="${user}" th:field="*{role}" class="form-control">
+			                <select form="userForm" th:object="${userForm}" th:field="*{role}" class="form-control">
 			                    <option value="">Nível de Acesso</option>
 			                    <option th:each="role : ${roles}" th:value="${role.id}" th:utext="${role.descricao}" selected="selected"></option>
 			                </select>

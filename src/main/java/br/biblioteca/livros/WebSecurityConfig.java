@@ -35,17 +35,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		super.configure(http);
 
+		System.out.println("Entrou na rotina Configure");
+
 		http.headers().frameOptions().disable();
 
 		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET, "/user/registration").permitAll()
 				.antMatchers(HttpMethod.POST, "/user/registration").permitAll()
-				.antMatchers(HttpMethod.GET, "/user/index").hasRole("BASIC").antMatchers(HttpMethod.GET, "/user/index")
-				.hasRole("ADMIN").and().formLogin().loginPage("/user/login").permitAll().and().logout().permitAll();
-
+				.antMatchers(HttpMethod.GET, "/user/register").permitAll().antMatchers(HttpMethod.GET, "/user/index")
+				.hasRole("BASIC").antMatchers(HttpMethod.GET, "/user/index").hasRole("ADMIN").and().formLogin()
+				.loginPage("/user/login").permitAll().and().logout().permitAll();
 	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		System.out.println("configureGlobal");
+
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
 

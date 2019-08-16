@@ -21,6 +21,8 @@ public class UserDetailService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.println("loadUserByUsername / username: " + username);
+
 		User user = userService.findByUsername(username);
 
 		Set<GrantedAuthority> grantedAuth = new HashSet<>();

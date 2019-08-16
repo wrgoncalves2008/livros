@@ -70,8 +70,8 @@ public class UserController {
 		return new ModelAndView("user/index", "listaUsers", listaUsers);
 	}
 
-	@GetMapping("/register")
-	public ModelAndView createForm(@ModelAttribute User user) {
+	@GetMapping("/registration")
+	public ModelAndView createForm(@ModelAttribute User userForm) {
 		System.out.println("Cadastrando novo usuário");
 
 		ModelAndView viewUser = new ModelAndView("user/register");

@@ -23,6 +23,8 @@ public class LoginValidator implements Validator {
 	@Override
 	public void validate(Object o, Errors errors) {
 
+		System.out.println("LoginValidator - Validate");
+
 		User user = (User) o;
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
