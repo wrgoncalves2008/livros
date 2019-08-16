@@ -1,8 +1,11 @@
 package br.biblioteca.livros.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +22,7 @@ import br.biblioteca.livros.service.RoleService;
 import br.biblioteca.livros.service.SecurityService;
 import br.biblioteca.livros.service.UserService;
 import br.biblioteca.livros.validators.LoginValidator;
+import br.biblioteca.livros.validators.UserValidator;
 
 @Controller
 @RequestMapping("/user")
@@ -35,6 +39,9 @@ public class UserController {
 
 	@Autowired
 	private LoginValidator loginValidator;
+
+	@Autowired
+	private UserValidator userValidator;
 
 	@GetMapping("/login")
 	public ModelAndView login() {
@@ -60,7 +67,7 @@ public class UserController {
 		System.out.println("Acessando usuários");
 
 		Iterable<User> listaUsers = userService.listaUsuarios();
-		return new ModelAndView("user/listadmin", "listaUsers", listaUsers);
+		return new ModelAndView("user/index", "listaUsers", listaUsers);
 	}
 
 	@GetMapping("/register")
@@ -74,21 +81,40 @@ public class UserController {
 		return viewUser;
 	}
 
-	@GetMapping("/alterar/{id}")
-	public ModelAndView alterar(@PathVariable("id") Long id) {
-		System.out.println("Alterando o cadastro do usuário " + id);
+	@PostMapping("/registration")
+	public ModelAndView registration(@ModelAttribute("userForm") User userForm, BindingResult br, Model model) {
 
-		ModelAndView viewUser = new ModelAndView("user/register");
+		userValidator.validate(userForm, br);
 
-		Iterable<Roles> roles = roleService.listaRoles();
-		viewUser.addObject("roles", roles);
+		if (br.hasErrors()) {
+			return new ModelAndView("redirect:/user/login");
+		}
 
-		User user = userService.getUser(id);
-		user.setSenha("");
+		String password = userForm.getSenha();
+		userService.save(userForm);
 
-		viewUser.addObject("user", user);
+		try {
+			securityService.login(userForm.getNome(), password);
 
-		return viewUser;
+			return new ModelAndView("redirect:/user/index");
+		} catch (Exception e) {
+			return new ModelAndView("redirect:/user/login");
+
+		}
+
+	}
+
+	@GetMapping("/logout")
+	public ModelAndView logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		SecurityContextHolder.clearContext();
+
+		if (session != null) {
+			session.invalidate();
+		}
+
+		return new ModelAndView("redirect:/user/login");
+
 	}
 
 	@GetMapping("/excluir/{id}")
