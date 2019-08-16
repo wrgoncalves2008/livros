@@ -19,9 +19,6 @@ import br.biblioteca.livros.service.AutorService;
 @RequestMapping("/autor")
 public class AutorController {
 
-//	@Autowired
-//	private AutorRepositorio autorrepositorio;
-
 	@Autowired
 	private AutorService autorService;
 
