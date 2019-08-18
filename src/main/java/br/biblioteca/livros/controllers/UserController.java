@@ -54,12 +54,18 @@ public class UserController {
 		loginValidator.validate(userform, br);
 
 		if (br.hasErrors()) {
-			return new ModelAndView("user/login");
+			return new ModelAndView("user/login", "userForm", new User());
 		}
 
-		securityService.login(userform.getNome(), userform.getSenha());
-
-		return new ModelAndView("redirect:/user/index");
+		try {
+			securityService.login(userform.getNome(), userform.getSenha());
+			
+			User user = userService.getUser( userform.getId());
+			
+			return new ModelAndView("redirect:/home", "userform" , user);
+		} catch (Exception E) {
+			return new ModelAndView("redirect:/user/login", "userForm", new User());
+		}
 	}
 
 	@GetMapping("/index")
@@ -70,11 +76,10 @@ public class UserController {
 		return new ModelAndView("user/index", "listaUsers", listaUsers);
 	}
 
-	@GetMapping("/registration")
-	public ModelAndView createForm(@ModelAttribute User userForm) {
-		System.out.println("Cadastrando novo usuário");
-
+	@GetMapping("/register")
+	public ModelAndView register() {
 		ModelAndView viewUser = new ModelAndView("user/register");
+		viewUser.addObject("userForm", new User());
 		Iterable<Roles> roles = roleService.listaRoles();
 		viewUser.addObject("roles", roles);
 
@@ -101,7 +106,6 @@ public class UserController {
 			return new ModelAndView("redirect:/user/login");
 
 		}
-
 	}
 
 	@GetMapping("/logout")
@@ -126,16 +130,33 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/gravar")
-	public ModelAndView gravar(@ModelAttribute("user") @Valid User user, BindingResult bindingresult) {
+	public ModelAndView gravar(@ModelAttribute("userForm") @Valid User userForm, BindingResult bindingresult) {
 
 		if (bindingresult.hasErrors()) {
 			System.out.println("Deu erro pra gravar o usuário");
 			return new ModelAndView("redirect:/user/index");
 		}
 
-		userService.save(user);
+		userService.save(userForm);
 
 		return new ModelAndView("redirect:/user/index");
+	}
+
+	@GetMapping("/alterar/{id}")
+	public ModelAndView alterar(@PathVariable("id") Long id) {
+		System.out.println("Alterando o cadastro do usuário " + id);
+
+		ModelAndView viewUser = new ModelAndView("user/alterar");
+
+		Iterable<Roles> roles = roleService.listaRoles();
+		viewUser.addObject("roles", roles);
+
+		User user = userService.getUser(id);
+		user.setSenha("");
+
+		viewUser.addObject("userForm", user);
+
+		return viewUser;
 	}
 
 }

@@ -22,16 +22,13 @@ public class LoginValidator implements Validator {
 
 	@Override
 	public void validate(Object o, Errors errors) {
-
-		System.out.println("LoginValidator - Validate");
-
 		User user = (User) o;
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nome", "NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "senha", "NotEmpty");
 
 		if (userService.findByUsername(user.getNome()) == null) {
-			errors.rejectValue("username", "NotExist.userForm.username");
+			errors.rejectValue("senha", "NotExist.userForm.senha");
 		}
 
 	}

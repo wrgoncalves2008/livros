@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
   <head>
     <meta charset="UTF-8" /> 
     <title>Autores</title>
@@ -12,12 +13,21 @@
 		</div> 
 		
 		<ul class="nav breadcrumb">
+			<li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/}">Home</a>
+			</li>
 		    <li class="nav-item">
 				<a class="nav-link" href="#" th:href="@{/autor/index}">Autores</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#" th:href="@{/livros/index}">Livros</a>
 			</li>			
+			<li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/user/index}">Usuários</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/user/logout}">Sair</a>
+			</li>
 		</ul>
 		
 		<nav aria-label="breadcrumb">
@@ -40,8 +50,8 @@
 				<td th:text="${autor.id}"></td>
 				<td th:text="${autor.nome}"></td>
 				<td>
-					<a style="width:100px" class="btn btn-info" th:href="@{'/autor/alterar/' + ${autor.id}}">Alterar</a>
-					<a style="width:100px" class="btn btn-danger" th:href="@{'/autor/excluir/' + ${autor.id}}">Excluir</a>
+					<a sec:authorize="hasAuthority('ROLE_ADMIN')" style="width:100px" class="btn btn-info" th:href="@{'/autor/alterar/' + ${autor.id}}">Alterar</a>
+					<a sec:authorize="hasAuthority('ROLE_ADMIN')"style="width:100px" class="btn btn-danger" th:href="@{'/autor/excluir/' + ${autor.id}}">Excluir</a>
 					
 				</td>
 			</tr>

@@ -15,15 +15,14 @@
 	
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-			<li class="breadcrumb-item active" aria-current="page">Cadastro de Usuários</li>
+			<li class="breadcrumb-item active" aria-current="page">Alterando Usuário</li>
 			</ol>
 		</nav>	
 	
 		<a class="btn btn-sm btn-info" href="#" th:href="@{/user/index}" style="width:150px"></i>Voltar para Lista</a>
 	
 		<div layout:fragment="content" class="container">
-		    <form id="userForm" th:action="@{/user/registration}" method="post" th:object="${userForm}" action="#" >   
-		    
+		    <form id="userForm" th:action="@{/user/gravar}" method="post" th:object="${userForm}" action="#" >	   
 		        <div class="form-group row">
 		            <input type="hidden"  th:field="*{id}" />
 							            
@@ -53,7 +52,7 @@
 			            </div>
 		            </div>
 		            
-		            <button type="submit" class="btn btn-primary" style="width:150px">Registrar</button>
+		            <button type="submit" class="btn btn-primary" style="width:150px">Salvar</button>
 		        </div>
 		    </form>
 		</div>

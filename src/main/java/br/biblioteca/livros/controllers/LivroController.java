@@ -32,8 +32,6 @@ public class LivroController {
 
 	@GetMapping("/index")
 	public ModelAndView index() {
-		System.out.println("Listagem de livros");
-
 		Iterable<Livro> listaLivros = livroService.listaLivros();
 
 		return new ModelAndView("livros/index", "listaDeLivros", listaLivros);
@@ -62,8 +60,6 @@ public class LivroController {
 
 	@GetMapping("/alterar/{id}")
 	public ModelAndView alterar(@PathVariable("id") Long id) {
-		System.out.println("Alterando o livro " + id);
-
 		ModelAndView modelAndView = new ModelAndView("/livros/livro");
 		Iterable<Autor> autores = autorService.listaAutores();
 		modelAndView.addObject("autores", autores);
@@ -76,7 +72,6 @@ public class LivroController {
 
 	@GetMapping("/excluir/{id}")
 	public ModelAndView excluir(@PathVariable("id") Long id) {
-		System.out.println("Excluindo o livro " + id);
 		livroService.delete(id);
 		return new ModelAndView("redirect:livros/index");
 	}

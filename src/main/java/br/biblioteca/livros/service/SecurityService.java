@@ -19,8 +19,6 @@ public class SecurityService implements SecurityServiceInterface {
 
 	@Override
 	public String findLoggedInUsername() {
-		System.out.println("Rotina: findLoggedInUsername");
-
 		Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
 
 		if (userDetails instanceof UserDetails) {
@@ -32,8 +30,6 @@ public class SecurityService implements SecurityServiceInterface {
 
 	@Override
 	public UserDetails findLoggedInUser() {
-		System.out.println("Rotina: findLoggedInUser");
-
 		Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
 
 		if (userDetails instanceof UserDetails) {
@@ -45,16 +41,16 @@ public class SecurityService implements SecurityServiceInterface {
 
 	@Override
 	public void login(String username, String password) {
-		System.out.println("Rotina: Login (" + username + ", " + password + ")");
-
 		try {
 			UserDetails userDetails = userDetailService.loadUserByUsername(username);
+
 			UsernamePasswordAuthenticationToken userPassAuthToken = new UsernamePasswordAuthenticationToken(userDetails,
 					password, userDetails.getAuthorities());
 
 			Authentication auth = authManager.authenticate(userPassAuthToken);
 
 			if (auth.isAuthenticated()) {
+
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			}
 
