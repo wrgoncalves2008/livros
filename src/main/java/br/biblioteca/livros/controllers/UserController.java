@@ -89,13 +89,19 @@ public class UserController {
 
 	@PostMapping("/registration")
 	public ModelAndView registration(@ModelAttribute("userForm") User userForm, BindingResult br, Model model) {
-		String username = securityService.findLoggedInUser().getUsername();
+		
+		String username = null;
+		
+		if (securityService.findLoggedInUser() != null)
+		{
+			username = securityService.findLoggedInUser().getUsername();		
+		}
 		
 		userValidator.validate(userForm, br);
 
 		if (br.hasErrors()) {
 			
-			if (userService.findByUsername(username).getRole().getNome().equals("ROLE_ADMIN"))
+			if ((username != null) && (userService.findByUsername(username).getRole().getNome().equals("ROLE_ADMIN")))
 			{	
 				return new ModelAndView("redirect:/user/index");
 			}			
@@ -104,14 +110,15 @@ public class UserController {
 				return new ModelAndView("redirect:/user/login");	
 			}
 		}
-
+		
 		String password = userForm.getSenha();
+		
 		userService.save(userForm);
 
 		try {
 			if (username == null)
-			{
-				securityService.login(userForm.getNome(), password);
+			{				
+				securityService.login(userForm.getNome(), password);				
 				return new ModelAndView("redirect:/");
 			}		
 			
