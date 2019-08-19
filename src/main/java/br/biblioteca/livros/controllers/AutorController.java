@@ -35,7 +35,7 @@ public class AutorController {
 	public ModelAndView createForm(@ModelAttribute Autor autor) {
 		System.out.println("Cadastrando novo autor");
 		ModelAndView modelAndView = new ModelAndView("autor/autor");
-
+		
 		return modelAndView;
 	}
 
@@ -50,7 +50,7 @@ public class AutorController {
 
 		autorService.save(autor);
 
-		return new ModelAndView("redirect:autor/index");
+		return new ModelAndView("redirect:/autor/index");
 	}
 
 	@GetMapping("/alterar/{id}")
@@ -72,7 +72,7 @@ public class AutorController {
 
 		autorService.delete(id);
 
-		return new ModelAndView("redirect:autor/index");
+		return new ModelAndView("redirect:/autor/index");
 	}
 
 	@GetMapping("/getautores")

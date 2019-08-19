@@ -50,9 +50,12 @@ public class UserController {
 
 	@PostMapping("/authentication")
 	public ModelAndView authentication(@ModelAttribute("userForm") User userform, BindingResult br, Model model) {
-
+	
+		userform.setNome( userform.getNome().toLowerCase() );
+		userform.setSenha( userform.getSenha().toLowerCase() );
+		
 		loginValidator.validate(userform, br);
-
+		
 		if (br.hasErrors()) {
 			return new ModelAndView("user/login", "userForm", new User());
 		}
@@ -60,11 +63,9 @@ public class UserController {
 		try {
 			securityService.login(userform.getNome(), userform.getSenha());
 			
-			User user = userService.getUser( userform.getId());
-			
-			return new ModelAndView("redirect:/home", "userform" , user);
+			return new ModelAndView("redirect:/");
 		} catch (Exception E) {
-			return new ModelAndView("redirect:/user/login", "userForm", new User());
+			return new ModelAndView("redirect:/user/login", "userform", new User());
 		}
 	}
 
@@ -88,22 +89,46 @@ public class UserController {
 
 	@PostMapping("/registration")
 	public ModelAndView registration(@ModelAttribute("userForm") User userForm, BindingResult br, Model model) {
-
+		String username = securityService.findLoggedInUser().getUsername();
+		
 		userValidator.validate(userForm, br);
 
 		if (br.hasErrors()) {
-			return new ModelAndView("redirect:/user/login");
+			
+			if (userService.findByUsername(username).getRole().getNome().equals("ROLE_ADMIN"))
+			{	
+				return new ModelAndView("redirect:/user/index");
+			}			
+			else
+			{
+				return new ModelAndView("redirect:/user/login");	
+			}
 		}
 
 		String password = userForm.getSenha();
 		userService.save(userForm);
 
 		try {
-			securityService.login(userForm.getNome(), password);
-
+			if (username == null)
+			{
+				securityService.login(userForm.getNome(), password);
+				return new ModelAndView("redirect:/");
+			}		
+			
 			return new ModelAndView("redirect:/user/index");
+			
 		} catch (Exception e) {
-			return new ModelAndView("redirect:/user/login");
+			
+			
+			
+			if (userService.findByUsername(username).getRole().getNome().equals("ROLE_ADMIN"))
+			{	
+				return new ModelAndView("redirect:/user/index");
+			}
+			else
+			{
+				return new ModelAndView("redirect:/user/login");	
+			}
 
 		}
 	}
@@ -132,14 +157,35 @@ public class UserController {
 	@PostMapping(value = "/gravar")
 	public ModelAndView gravar(@ModelAttribute("userForm") @Valid User userForm, BindingResult bindingresult) {
 
+		String username = securityService.findLoggedInUser().getUsername();
+		
 		if (bindingresult.hasErrors()) {
 			System.out.println("Deu erro pra gravar o usuário");
-			return new ModelAndView("redirect:/user/index");
+			
+			if (userService.findByUsername(username).getRole().getNome().equals("ROLE_ADMIN"))
+			{	
+				System.out.println("Admin");
+				return new ModelAndView("redirect:/user/index");
+			}
+			else
+			{
+				System.out.println("basic");
+				return new ModelAndView("redirect:/");
+			}
 		}
 
 		userService.save(userForm);
-
-		return new ModelAndView("redirect:/user/index");
+		
+		if (userService.findByUsername(username).getRole().getNome().equals("ROLE_ADMIN"))
+		{	
+			System.out.println("Admin");
+			return new ModelAndView("redirect:/user/index");
+		}
+		else
+		{
+			System.out.println("basic");
+			return new ModelAndView("redirect:/");
+		}
 	}
 
 	@GetMapping("/alterar/{id}")
@@ -158,5 +204,14 @@ public class UserController {
 
 		return viewUser;
 	}
+	
+	@GetMapping("/alterarusuario")
+	public ModelAndView alterarUsuario()
+	{
+		String username = securityService.findLoggedInUser().getUsername();		
+			
+		return alterar( userService.findUserIDByUsername( username ) );				
+	}
+	
 
 }

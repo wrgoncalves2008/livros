@@ -47,5 +47,30 @@ public class UserService {
 
 		return result;
 	}
+	
+	public Long findUserIDByUsername(String username) {
+
+		for (User user : listaUsuarios()) {
+			if (user.getNome().equals(username)) {
+				return user.getId();
+			}
+		}
+
+		return null;
+	}
+	
+	public User findUser(String username, String password) {
+
+		User result = null;
+
+		for (User user : listaUsuarios()) {
+			System.out.println( user.getNome() );
+			if ((user.getNome().equals(username)) && ( user.getSenha().equals(password) )) {
+				result = user;
+			}
+		}
+
+		return result;
+	}
 
 }

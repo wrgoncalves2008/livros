@@ -21,6 +21,13 @@ public class SecurityService implements SecurityServiceInterface {
 	public String findLoggedInUsername() {
 		Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
 
+		System.out.println("passou aqui");
+		System.out.println(userDetails.toString());
+
+		if (userDetails == null) {
+			System.out.println("não achou");
+		}
+		
 		if (userDetails instanceof UserDetails) {
 			return ((UserDetails) userDetails).getUsername();
 		}
@@ -30,10 +37,11 @@ public class SecurityService implements SecurityServiceInterface {
 
 	@Override
 	public UserDetails findLoggedInUser() {
-		Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
-
-		if (userDetails instanceof UserDetails) {
-			return (UserDetails) userDetails;
+				
+		Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				
+		if (userDetails instanceof UserDetails) {			
+			return (UserDetails) userDetails;			
 		}
 
 		return null;
@@ -43,14 +51,14 @@ public class SecurityService implements SecurityServiceInterface {
 	public void login(String username, String password) {
 		try {
 			UserDetails userDetails = userDetailService.loadUserByUsername(username);
-
+				
 			UsernamePasswordAuthenticationToken userPassAuthToken = new UsernamePasswordAuthenticationToken(userDetails,
 					password, userDetails.getAuthorities());
 
 			Authentication auth = authManager.authenticate(userPassAuthToken);
 
 			if (auth.isAuthenticated()) {
-
+				
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			}
 

@@ -21,13 +21,13 @@
 			<div class="container" style="width: 350px">	
 				<form id="userForm" th:action="@{/user/authentication}" th:object="${userForm}" action="#" method="post">
 					<label for="staticTitulo">Usuário</label> 
-					<input type="text" class="form-control" th:field="*{nome}"/><span  th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Nome Error</span><br/>
+					<input type="text" class="form-control" th:field="*{nome}"/><span  th:if="${#fields.hasErrors('nome')}" th:errors="*{username}">Nome Error</span><br/>
 					<label for="staticTitulo">Senha</label>
-					<input type="password" class="form-control" th:field="*{senha}"/><span  th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}">Senha Error</span><br/>
+					<input type="password" class="form-control" th:field="*{senha}"/><span  th:if="${#fields.hasErrors('senha')}" th:errors="*{password}">Senha Error</span><br/>
 					<input class="btn btn-sm btn-info" style="width: 150px; margin-bottom: 20px" type="submit" name="login" value="Login" />				
 					
 				</form>
-				<a class="btn btn-sm btn-danger" style="width:150px; margin-bottom: 20px" th:href="@{/user/registration}">Registrar</a>
+				<a class="btn btn-sm btn-danger" style="width:150px; margin-bottom: 20px" th:href="@{/user/register}">Registrar</a>
 			</div>
 		</div>
 	</div>

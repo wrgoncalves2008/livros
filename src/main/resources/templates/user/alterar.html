@@ -19,7 +19,8 @@
 			</ol>
 		</nav>	
 	
-		<a class="btn btn-sm btn-info" href="#" th:href="@{/user/index}" style="width:150px"></i>Voltar para Lista</a>
+		<a sec:authorize="hasAuthority('ROLE_BASIC')" class="btn btn-sm btn-info" href="#" th:href="@{/}" style="width:150px"></i>Voltar</a>
+		<a sec:authorize="hasAuthority('ROLE_ADMIN')" class="btn btn-sm btn-info" href="#" th:href="@{/user/index}" style="width:150px"></i>Voltar para Lista</a>
 	
 		<div layout:fragment="content" class="container">
 		    <form id="userForm" th:action="@{/user/gravar}" method="post" th:object="${userForm}" action="#" >	   
@@ -33,7 +34,7 @@
 			                <span  th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Nome Error</span>
 			            </div>
 		            </div>
-		            
+		            		            
 		            <div class="form-group" style="width: 100%">
 			            <label for="staticTitulo" class="col-sm-2 col-form-label">Nível de Acesso</label>
 			            <div class="col-sm-15">

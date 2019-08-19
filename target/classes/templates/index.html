@@ -8,13 +8,13 @@
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
-<body>
+  <body>
 	<div class="container">
 		<div class="jumbotron text-center">
 			<h1>Biblioteca</h1>
-	  	</div>	  
-	  		  		
-		<ul class="nav breadcrumb">
+	  	</div>	
+	  	
+	  	<ul class="nav breadcrumb">
 			<li class="nav-item">
 				<a class="nav-link" href="#" th:href="@{/}">Home</a>
 			</li>
@@ -25,7 +25,7 @@
 				<a class="nav-link" href="#" th:href="@{/livros/index}">Livros</a>
 			</li>		
 			<li class="nav-item" sec:authorize="hasAuthority('ROLE_BASIC')">
-				<a  class="nav-link" href="#" th:href="@{/user/index}">Usuário</a>
+				<a  class="nav-link" href="#" th:href="@{/user/alterarusuario}">Usuário</a>
 			</li>	
 			<li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
 				<a  class="nav-link" href="#" th:href="@{/user/index}">Gerenciar Usuários</a>
@@ -34,6 +34,6 @@
 				<a class="nav-link" href="#" th:href="@{/user/logout}">Sair</a>
 			</li>
 		</ul>
-	</div>	
-</body>
+	</div>
+  </body>
 </html>
