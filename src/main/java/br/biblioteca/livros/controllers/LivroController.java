@@ -39,7 +39,7 @@ public class LivroController {
 
 	@GetMapping("/novo")
 	public ModelAndView createForm(@ModelAttribute Livro livro) {
-		ModelAndView modelAndView = new ModelAndView("/livros/livro");
+		ModelAndView modelAndView = new ModelAndView("livros/livro");
 		Iterable<Autor> autores = autorService.listaAutores();
 		modelAndView.addObject("autores", autores);
 		return modelAndView;
@@ -60,7 +60,7 @@ public class LivroController {
 
 	@GetMapping("/alterar/{id}")
 	public ModelAndView alterar(@PathVariable("id") Long id) {
-		ModelAndView modelAndView = new ModelAndView("/livros/livro");
+		ModelAndView modelAndView = new ModelAndView("livros/livro");
 		Iterable<Autor> autores = autorService.listaAutores();
 		modelAndView.addObject("autores", autores);
 
